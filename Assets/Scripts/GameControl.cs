@@ -8,22 +8,32 @@ using UnityEngine.Advertisements;
 public class GameControl : MonoBehaviour {
 
     public static GameControl instance;
+
     public GameObject gameOverText;
-    public Text scoreText;
-    public Text highScore;
     public GameObject gamePanel;
-    public int dieCount = 0;
-    public bool gameOver=false;
-    private int score=0;
     public GameObject backgroundSound;
     public GameObject scoreSound;
     public GameObject birdDieSound;
-    public float scrollSpeed;
     public GameObject button;
+
     public Sprite play;
     public Sprite pause;
+
     public DataController dataController;
+
+    public Text scoreText;
+    public Text highScore;
+
+    public int dieCount = 0;
+    private int score = 0;
+
+    public bool gameOver=false;
     public bool gamePause = false;
+    bool testMode = false;
+
+    public float scrollSpeed;
+
+    string gameId = "3490582";
 
     // Use this for initialization
     void Awake () {
@@ -46,8 +56,7 @@ public class GameControl : MonoBehaviour {
     {
         backgroundSound.GetComponent<AudioSource>().Play();
         dataController = FindObjectOfType<DataController>();
-
-
+        Advertisement.Initialize(gameId, testMode);
     }
 
   
@@ -68,8 +77,6 @@ public class GameControl : MonoBehaviour {
 
     public void BirdScored()
     {
-
-       
         if (gameOver)
         {
             return;
@@ -91,6 +98,8 @@ public class GameControl : MonoBehaviour {
         gameOverText.SetActive(true);
         backgroundSound.GetComponent<AudioSource>().Stop();
 
+        if(score>1)
+            Advertisement.Show();
     }
 
     public void PauseGame()

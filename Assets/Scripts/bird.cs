@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class bird : MonoBehaviour {
 
-    public float upForce = 200;
+    public float upForce = 275;
     private bool isDead;
     private Rigidbody2D rb2d;
     private Animator anim;
-    public GameObject startText;
     public GameObject birdFlapSound;
     public GameObject button;
 
@@ -17,7 +16,6 @@ public class bird : MonoBehaviour {
 
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        button.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -29,8 +27,7 @@ public class bird : MonoBehaviour {
 
             if(Input.GetMouseButtonDown(0))
             {
-                button.SetActive(true);
-                startText.SetActive(false);
+                birdFlapSound.GetComponent<AudioSource>().Stop();
                 rb2d.gravityScale = 1.5f;
                 rb2d.velocity = Vector2.zero;
                 rb2d.AddForce(new Vector2(0, upForce));
